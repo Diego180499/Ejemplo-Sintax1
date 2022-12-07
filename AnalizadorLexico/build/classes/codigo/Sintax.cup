@@ -1,0 +1,42 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+
+parser code
+
+{:
+
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+
+:};
+
+terminal EVALUAR, PAR_A, PAR_C, PLUS, COMA, ID,ERROR;
+terminal Integer NUM;
+
+non terminal E;
+non terminal expr;
+
+
+//reglas de precedencias: precedence left PLUS precedence left  MULT (si hubiera multiplicacion)
+
+start with E;
+
+E::= EVALUAR PAR_A expr PAR_C COMA
+    | EVALUAR PAR_A expr PAR_C
+    ;
+
+
+expr::= expr PLUS expr
+    |   NUM
+    ;
+
+
